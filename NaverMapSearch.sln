@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flow.Launcher.Plugin.NaverMapSearch", "src\Flow.Launcher.Plugin.NaverMapSearch\Flow.Launcher.Plugin.NaverMapSearch.csproj", "{916F9222-5226-409C-97E2-96024A493121}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaverMapSearch.Tests", "tests\NaverMapSearch.Tests\NaverMapSearch.Tests.csproj", "{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{916F9222-5226-409C-97E2-96024A493121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Debug|x64.Build.0 = Debug|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Debug|x86.Build.0 = Debug|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Release|x64.ActiveCfg = Release|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Release|x64.Build.0 = Release|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Release|x86.ActiveCfg = Release|Any CPU
+		{916F9222-5226-409C-97E2-96024A493121}.Release|x86.Build.0 = Release|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Debug|x64.Build.0 = Debug|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Debug|x86.Build.0 = Debug|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Release|x64.ActiveCfg = Release|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Release|x64.Build.0 = Release|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Release|x86.ActiveCfg = Release|Any CPU
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{916F9222-5226-409C-97E2-96024A493121} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{243516F8-C3A8-4AE6-8FFB-0346F3045CFC} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+EndGlobal
