@@ -41,3 +41,34 @@ jobs:
         with:
           name: test-results
           path: TestResults/*.trx
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: NaverMapSearch
+          path: dist
+      - name: Publish installable ZIP
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = $env:GITHUB_REF_NAME -replace '^v', ''
+          $notes = @"
+          Search NAVER local places from Flow Launcher with ``nm``.
+
+          Each user configures their own NAVER Client ID and Client Secret in plugin settings.
+          Requires Flow Launcher 2.1.4 or newer. Credentials are encrypted with Windows DPAPI.
+
+          Install by entering this in Flow Launcher:
+          pm install https://github.com/$env:GITHUB_REPOSITORY/releases/download/$env:GITHUB_REF_NAME/NaverMapSearch-$version.zip
+
+          Download the ZIP under Assets, not the Source code archives.
+          "@
+          $notes | Set-Content release-notes.md -Encoding utf8
+          gh release create $env:GITHUB_REF_NAME "dist/NaverMapSearch-$version.zip" --repo $env:GITHUB_REPOSITORY --verify-tag --title "NaverMapSearch $version" --notes-file release-notes.md
+          if ($LASTEXITCODE -ne 0) { throw 'Release publishing failed.' }

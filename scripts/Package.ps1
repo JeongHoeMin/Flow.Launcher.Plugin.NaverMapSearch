@@ -23,4 +23,5 @@ Copy-Item -LiteralPath (Join-Path $build 'Images/icon.png') -Destination (Join-P
 Copy-Item -LiteralPath (Join-Path $repo 'README.md'), (Join-Path $repo 'LICENSE') -Destination $stage
 $zip = Join-Path $artifacts "NaverMapSearch-$Version.zip"
 Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip -Force
+& (Join-Path $PSScriptRoot 'Test-Package.ps1') -Path $zip
 Write-Output $zip

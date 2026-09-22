@@ -17,9 +17,18 @@ nm 서울시청
 
 ## 요구 사항과 설치
 
-- Windows 10/11, .NET 9 기반 Flow Launcher 2.x (로컬 검증 대상: 2.1.4).
+- Windows 10/11, Flow Launcher 2.1.4 이상 (.NET 9 기반).
 - 개발에는 .NET 9 SDK가 필요합니다. 일반 사용자는 SDK를 설치할 필요가 없습니다.
-- 공식 플러그인 목록에는 아직 등록하지 않았습니다.
+- 공식 플러그인 목록 등록은 Flow Launcher 팀의 PR 승인 후 반영됩니다.
+
+Flow Launcher 검색창에서 릴리스 ZIP URL로 설치할 수 있습니다.
+
+```text
+pm install https://github.com/JeongHoeMin/Flow.Launcher.Plugin.NaverMapSearch/releases/download/v1.0.0/NaverMapSearch-1.0.0.zip
+```
+
+공식 목록에 반영된 뒤에는 `pm install NaverMapSearch`로도 설치할 수 있습니다.
+수동 설치를 선호하면 다음 절차를 사용하세요.
 
 1. 아래 빌드 절차 또는 GitHub Actions의 `NaverMapSearch` 아티팩트에서
    `NaverMapSearch-1.0.0.zip`을 준비합니다. Actions 다운로드 ZIP 안에 플러그인 ZIP이 들어 있습니다.
@@ -28,6 +37,11 @@ nm 서울시청
    포터블 설치는 해당 인스턴스의 사용자 데이터 폴더를 사용하세요.
 3. 폴더 바로 아래에 `plugin.json`과 `Flow.Launcher.Plugin.NaverMapSearch.dll`이 있어야 합니다.
 4. Flow Launcher를 다시 시작하고 설정 → 플러그인 → **NaverMapSearch**를 엽니다.
+
+`Invalid zip installer file`이 표시되면 ZIP 안에 `plugin.json`이 있는지 확인하세요.
+Actions에서 받은 바깥쪽 ZIP이나 GitHub의 Source code ZIP은 설치 파일이 아닙니다.
+[Releases](https://github.com/JeongHoeMin/Flow.Launcher.Plugin.NaverMapSearch/releases)의
+Assets에서 `NaverMapSearch-1.0.0.zip`을 받으세요.
 
 업데이트 시 Flow Launcher를 종료하고 이전 플러그인 폴더를 새 패키지로 교체하세요.
 동일 플러그인을 여러 버전의 폴더에 동시에 두지 마세요.
@@ -81,7 +95,8 @@ dotnet test NaverMapSearch.sln -c Release --no-build --no-restore
 
 GitHub Actions는 Windows에서 빌드·테스트 후 ZIP을 아티팩트로 저장합니다.
 버전 태그 `v1.0.0`의 숫자는 프로젝트와 `plugin.json`의 버전과 일치해야 합니다.
-워크플로는 GitHub Release 게시나 Flow Launcher 플러그인 목록 등록을 수행하지 않습니다.
+버전 태그에서는 빌드·테스트·ZIP 구조 검증을 통과한 파일을 GitHub Release에 자동 게시합니다.
+공식 목록의 최초 등록은 별도 PR로 제출하며, 승인 후 업데이트는 목록 관리 시스템이 릴리스를 확인합니다.
 
 ## 라이선스
 
