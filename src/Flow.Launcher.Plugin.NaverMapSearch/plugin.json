@@ -1,0 +1,13 @@
+{
+  "ID": "D7A92EF8C64B4A1F9EB63082C0587ABD",
+  "ActionKeyword": "nm",
+  "Name": "NaverMapSearch",
+  "Description": "네이버 지역 검색 API로 장소를 검색하고 네이버 지도에서 엽니다.",
+  "Author": "JeongHoeMin",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/JeongHoeMin/Flow.Launcher.Plugin.NaverMapSearch",
+  "ExecuteFileName": "Flow.Launcher.Plugin.NaverMapSearch.dll",
+  "IcoPath": "Images\\icon.png",
+  "SearchDelayTime": 0
+}
