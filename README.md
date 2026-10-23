@@ -1,5 +1,116 @@
 # NaverMapSearch
 
+[English](#english) | [한국어](#한국어)
+
+## English
+
+A C# plugin for Flow Launcher that finds places using the Naver Local Search API.
+**Each user must obtain and configure their own Client ID and Client Secret.**
+The plugin does not use shared credentials or a separate proxy server.
+
+```text
+nm 강남 카페
+nm 판교 도서관
+nm 서울시청
+```
+
+Results show the place name, category, and address. Press Enter to search Naver Map
+in your default browser using the place's address and name. Since the API does not
+provide place IDs, results do not link directly to a specific place's details page.
+Road-name addresses are preferred; lot-number addresses are used when unavailable.
+
+### Requirements and installation
+
+- Windows 10/11 and Flow Launcher 2.1.4 or later (based on .NET 9).
+- Development requires the .NET 9 SDK. End users do not need to install the SDK.
+- The plugin will appear in the official plugin list after the Flow Launcher team approves the registration PR.
+
+Enter the release ZIP URL in Flow Launcher to install:
+
+```text
+pm install https://github.com/JeongHoeMin/Flow.Launcher.Plugin.NaverMapSearch/releases/download/v1.0.0/NaverMapSearch-1.0.0.zip
+```
+
+Once included in the official list, you can also use `pm install NaverMapSearch`.
+For manual installation:
+
+1. Obtain `NaverMapSearch-1.0.0.zip` using the build instructions below or the
+   `NaverMapSearch` artifact from GitHub Actions. The Actions download ZIP contains the plugin ZIP.
+2. Open the user data folder from Flow Launcher settings and extract the plugin ZIP
+   into `Plugins/NaverMapSearch-1.0.0`. The usual path is `%APPDATA%/FlowLauncher/Plugins`.
+   For portable installations, use that instance's user data folder.
+3. Ensure `plugin.json` and `Flow.Launcher.Plugin.NaverMapSearch.dll` are directly inside the plugin folder.
+4. Restart Flow Launcher and open Settings → Plugins → **NaverMapSearch**.
+
+If you see `Invalid zip installer file`, check that the ZIP contains `plugin.json`.
+The outer ZIP from Actions and GitHub's Source code ZIP are not plugin installers.
+Download `NaverMapSearch-1.0.0.zip` from the Assets section of
+[Releases](https://github.com/JeongHoeMin/Flow.Launcher.Plugin.NaverMapSearch/releases).
+
+To update, exit Flow Launcher and replace the old plugin folder with the new package.
+Do not keep multiple versions of the same plugin in separate folders at the same time.
+Credentials are stored in the user settings folder, separately from the plugin installation folder.
+
+### Obtaining and configuring credentials
+
+1. Sign in to the [Naver Developers portal](https://developers.naver.com/apps/#/register) and register an application.
+2. Select **Search (검색)** under the APIs to use. These credentials differ from Naver Map Cloud API credentials.
+3. Enter your **Client ID** and **Client Secret** in the plugin settings fields
+   `X-Naver-Client-Id` and `X-Naver-Client-Secret`, respectively.
+4. Click **Save (저장)**, then try `nm 강남 카페`. Saving only stores the credentials locally;
+   authentication and API permissions are checked when an actual search request is made.
+
+The Secret field is masked. Both values are encrypted using Windows DPAPI (CurrentUser)
+and stored in `credentials.json` in the plugin settings folder provided by Flow Launcher.
+Re-enter the credentials if the file is corrupted or copied from another PC or Windows account.
+DPAPI does not isolate secrets from programs running under the same Windows account.
+The plugin does not log credentials and sends them only to Naver's HTTPS API when searching.
+
+### Search limits and errors
+
+- Following the [Local Search API](https://developers.naver.com/docs/serviceapi/search/local/local.md)
+  limits, the plugin displays up to **5 results**, ordered by relevance (`sort=random`). Pagination is not supported.
+- Phone numbers (`telephone`) are not displayed because the API does not provide them.
+- A 300 ms input delay and cancellation of previous requests reduce unnecessary calls. The timeout is 10 seconds.
+- Authentication or permission errors: check both credentials and ensure the Search API is selected for your Naver application.
+- Quota errors: check usage in the Naver Developers portal and try again later.
+  Usage is shared with other programs using the same Client ID.
+- Network, timeout, or server errors: check your connection or try searching again later.
+- If there are no results, use a more specific area and place name.
+
+### Development, testing, and packaging
+
+```powershell
+dotnet restore NaverMapSearch.sln
+dotnet build NaverMapSearch.sln -c Release --no-restore
+dotnet test NaverMapSearch.sln -c Release --no-build --no-restore
+./scripts/Package.ps1
+```
+
+Output: `.artifacts/NaverMapSearch-1.0.0.zip`. To use the project-local SDK:
+
+```powershell
+./scripts/Package.ps1 -Dotnet "$PWD/.tools/dotnet/dotnet.exe"
+```
+
+The icon uses original vector shapes and can be regenerated with `scripts/New-Icon.ps1`.
+Tests use mocked HTTP responses, real DPAPI, and temporary settings files; Naver credentials are not required.
+Actual API calls and browser behavior require separate manual verification.
+
+GitHub Actions builds and tests on Windows, then saves the ZIP as an artifact.
+The version number in a tag such as `v1.0.0` must match the project and `plugin.json` versions.
+For version tags, files that pass the build, tests, and ZIP structure validation are automatically published to GitHub Releases.
+Initial registration in the official plugin list is submitted as a separate PR.
+After approval, the list management system checks releases for updates.
+
+### License
+
+MIT. This is not an official Naver product and does not include NAVER trademarks or logos.
+
+---
+
+## 한국어
+
 Flow Launcher에서 네이버 지역 검색 API로 장소를 찾는 C# 플러그인입니다.
 **각 사용자가 본인의 Client ID와 Client Secret을 발급받아 설정합니다.**
 공용 인증값이나 별도의 중계 서버는 사용하지 않습니다.
@@ -15,7 +126,7 @@ nm 서울시청
 특정 장소의 상세 페이지로 바로 이동하는 방식은 아닙니다.
 주소는 도로명 주소를 우선하며, 없으면 지번 주소를 표시합니다.
 
-## 요구 사항과 설치
+### 요구 사항과 설치
 
 - Windows 10/11, Flow Launcher 2.1.4 이상 (.NET 9 기반).
 - 개발에는 .NET 9 SDK가 필요합니다. 일반 사용자는 SDK를 설치할 필요가 없습니다.
@@ -47,7 +158,7 @@ Assets에서 `NaverMapSearch-1.0.0.zip`을 받으세요.
 동일 플러그인을 여러 버전의 폴더에 동시에 두지 마세요.
 인증값은 플러그인 설치 폴더와 별도인 사용자 설정 폴더에 저장됩니다.
 
-## 인증값 발급과 설정
+### 인증값 발급과 설정
 
 1. [네이버 개발자 센터](https://developers.naver.com/apps/#/register)에 로그인하고 애플리케이션을 등록합니다.
 2. 사용 API에서 **검색**을 선택합니다. 네이버 지도 클라우드 API 인증값과는 다릅니다.
@@ -62,7 +173,7 @@ Flow Launcher가 제공하는 플러그인 설정 폴더의 `credentials.json`�
 DPAPI는 같은 Windows 계정으로 실행되는 프로그램으로부터 비밀을 격리하는 수단은 아닙니다.
 플러그인은 인증값을 로그에 기록하지 않으며 검색 시 네이버 HTTPS API에만 전송합니다.
 
-## 검색 제한과 오류
+### 검색 제한과 오류
 
 - [지역 검색 API](https://developers.naver.com/docs/serviceapi/search/local/local.md)의
   제한에 따라 최대 **5개**, 정확도순(`sort=random`)으로 표시합니다. 페이지 이동은 지원하지 않습니다.
@@ -74,7 +185,7 @@ DPAPI는 같은 Windows 계정으로 실행되는 프로그램으로부터 비�
 - 네트워크·시간 초과·서버 오류: 연결을 확인하거나 잠시 후 다시 검색하세요.
 - 결과가 없으면 지역명과 장소명을 더 구체적으로 입력하세요.
 
-## 개발·테스트·패키징
+### 개발·테스트·패키징
 
 ```powershell
 dotnet restore NaverMapSearch.sln
@@ -98,6 +209,6 @@ GitHub Actions는 Windows에서 빌드·테스트 후 ZIP을 아티팩트로 저
 버전 태그에서는 빌드·테스트·ZIP 구조 검증을 통과한 파일을 GitHub Release에 자동 게시합니다.
 공식 목록의 최초 등록은 별도 PR로 제출하며, 승인 후 업데이트는 목록 관리 시스템이 릴리스를 확인합니다.
 
-## 라이선스
+### 라이선스
 
 MIT. 네이버 공식 제품이 아니며 NAVER 상표·로고를 포함하지 않습니다.
